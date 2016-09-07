@@ -1,0 +1,151 @@
+<html ng-app="mjChat" >
+<head>
+<link rel="stylesheet" type="text/css" href="dist/semantic.min.css">
+<script src="lib/jquery.min.js"></script>
+<script src="dist/semantic.min.js"></script>
+<script src="http://code.angularjs.org/angular-1.0.0.min.js"></script>
+<script src="js/ctrl/ChatCtrl.js"></script>
+<style>
+.vertical-scroll70vh {
+ height:70vh;
+overflow-y: auto;
+}
+.vertical-scroll80vh {
+ height:85vh;
+overflow-y: auto;
+}
+html { overflow-y: hidden; }
+</style>
+</head>
+
+<body ng-controller="ChatCtrl">
+
+
+
+
+
+
+<div class="ui container">
+
+<div class="ui small menu">
+  <a href="http://mjtech.in" class="active item">
+    mjTech.in
+  </a><a class="active item">
+    mjChat
+  </a>
+  <div class="item">
+    Chat Room 1
+  </div>
+  <div class="item">
+    Chat Room 2
+  </div>
+  <div class="item">
+    Chat Room 3
+  </div>
+  <a class="item">
+    + add more Chat Rooms
+  </a>
+  <div class="right menu">
+  <div class="item">
+        <div class="ui transparent input">
+  <input type="text" placeholder="Search..." ng-model="loggedInUserId">
+</div>
+    </div>
+	<div class="ui simple dropdown item"><i class="user icon"></i>
+      User Name <i class="dropdown icon"></i>
+      <div class="menu">
+        <a class="item">Change Password</a>
+        <a class="item">Edit Profile</a>
+        <a class="item">My Chat Rooms</a>
+      </div>
+    </div>
+	<div class="item">
+        <div class="ui blue button">Sign Out</div>
+    </div>
+  </div>
+</div>
+
+<div class="ui centered grid">
+  <div class="five wide column">
+  
+  
+
+<div class="ui segment vertical-scroll80vh">
+
+  <div class="ui fluid left icon input">
+  <input type="text" placeholder="Search Members ..." ng-model="searchText"/>
+  <i class="search icon"></i>
+</div>
+
+<table class="ui very basic celled table">
+   <tbody>
+    <tr ng-repeat="user in users" class="{{user.active}}">
+      <td>
+        <h4 class="ui image header" ng-click="userChanged(user.userid)">
+          <img src="images/avatar/small/{{user.avatar}}.jpg" class="ui mini rounded image" 
+			onerror='this.src="images/avatar/small/user.jpg"'>
+          <div class="content">
+            {{user.displayname}}
+            <div class="sub header">{{user.username}}
+          </div>
+        </div>
+      </h4></td>
+      
+    </tr>
+  </tbody>
+</table>
+  </div>
+  </div>
+  <div class="eleven wide column">
+    
+	
+	<div class="ui list" ng-hide="isUndefinedOrNull(selecteduser)">
+  <div class="item">
+    <img class="ui avatar image" src="images/avatar/small/{{selecteduser.avatar}}.jpg" 
+		onerror='this.src="images/avatar/small/user.jpg"'/>
+    <div class="content">
+      <a class="header">{{selecteduser.displayname}}</a>
+      <div class="description">{{selecteduser.status}}</div>
+    </div>
+  </div>
+  </div>
+	
+	<div class="ui segment vertical-scroll70vh" ng-hide="isUndefinedOrNull(selecteduser)">
+	
+<table class="ui very basic table">
+   <tbody>
+    <tr ng-repeat="message in messages">
+      <td class="{{getAlignment(message.senderId, loggedInUserId)}}">
+        <h4 class="ui header  ">
+          <div class="content">
+            {{message.content}}
+            <div class="sub header">{{message.sentdate}} 
+          </div>
+        </div>
+      </h4>
+</td>
+      
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+	
+	<div class="ui fluid action left icon input" ng-hide="isUndefinedOrNull(selecteduser)">
+  <input id="msgContentId" type="text" placeholder="Write your message ..." ng-model="msgContent" 
+  onkeydown = "if (event.keyCode == 13) document.getElementById('sendBtnId').click()"/>
+  <i class="write icon"></i>
+  <div id="sendBtnId" class="ui button" ng-click="send()">Send</div>
+  
+</div>
+	
+  </div>
+
+</div>
+</div>
+
+
+
+
+</body>
+</html>
